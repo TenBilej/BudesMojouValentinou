@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budeš mojou Valentínou?</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgb(238, 189, 188);
+            font-family: 'Arial', sans-serif;
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #d32f2f;
+        }
+
+        .buttons {
+            margin-top: 25px;
+        }
+
+        .yes-button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            margin-right: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .no-button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: not-allowed;
+        }
+
+        .gif_container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .heart {
+            position: fixed;
+            top: -10px;
+            font-size: 24px;
+            animation: fall 5s linear forwards;
+            pointer-events: none;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        @keyframes fall {to {transform: translateY(110vh); opacity: 0;}}
+    </style>
+</head>
+
+<body>
+    <div id="page1" class="container">
+        <h1>Budeš mojou Valentínou?</h1>
+
+        <div class="buttons">
+            <button class="yes-button" onclick="showPage2()" id="AnoButton">Áno</button>
+            <button class="no-button" onclick="handleNoClick()" id="NieButton">Nie</button>
+            <div id="tooltip"></div>
+        </div>
+        <script>
+            function createHeart() {
+                const heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "❤️";
+
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = (Math.random() * 3 + 10) + "s";
+                heart.style.fontSize = (Math.random() * 30 + 30) + "px";
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {heart.remove(); }, 20000);
+            }
+
+setInterval(createHeart, 300);
+
+        </script>
+        <style>
+            #tooltip {
+                position: absolute;
+                background: rgb(249, 135, 184);
+                color: white;
+                padding: 5px 10px;
+                border-radius: 6px;
+                font-size: 25px;
+                display: none;
+                pointer-events: none;
+            }
+        </style>
+        <script>
+            const buttonAno = document.getElementById("AnoButton");
+            const buttonNie = document.getElementById("NieButton");
+            const tooltip = document.getElementById("tooltip");
+
+            buttonAno.addEventListener("mousemove", (e) => {
+                tooltip.style.display = "block";
+                tooltip.style.left = e.pageX + 10 + "px";
+                tooltip.style.top = e.pageY - 30 + "px";
+                tooltip.innerHTML = "Prosím povedz áno ❤️";
+            });
+
+            buttonNie.addEventListener("mousemove", (e) => {
+                tooltip.style.display = "block";
+                tooltip.style.left = e.pageX + 10 + "px";
+                tooltip.style.top = e.pageY - 30 + "px";
+                tooltip.innerHTML = "Sem prosím neklikaj 💔";
+            });
+
+            buttonAno.addEventListener("mouseleave", () => {
+            tooltip.style.display = "none";
+            });
+            buttonNie.addEventListener("mouseleave", () => {
+            tooltip.style.display = "none";
+            });
+        </script>
+        
+        <div class="gif_container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW5lenZyZHI5OXM2eW95b3pmMG40cWVrMDhtNjVuM3A4dGNxa2g2dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/VM1fcpu2bKs1e2Kdbj/giphy.gif" alt="Cute GIF">
+        </div>
+    </div>
+
+    <script>
+const messages = [
+    "Si si istá?",
+    "Naozaj?",
+    "Miláčik prosím...",
+    "Počkaj… to myslíš vážne?",
+    "Ale no taaak…",
+    "Daj mi šancu, prosím, ja budem dobrý",
+    "Povedz áno a prisahám, že budem najšťastnejší človek na svete.",
+    "Prosím premysli si to",
+    "Pokiaľ povieš nie, budem naozaj smutný...",
+    "Budem veľmi smutný...",
+    "Budem veľmi, veľmi smutný...",
+    "No, dobre prestnem sa pýtať...",
+    "Iba som žartoval... Povedz prosím ÁNO. ❤️"
+];
+
+let messageIndex = 0;
+
+function showPage2() {
+    document.getElementById("page1").style.display = "none";
+    document.getElementById("page2").style.display = "block";
+}
+
+  function showPage1() {
+    document.getElementById("page2").style.display = "none";
+    document.getElementById("page1").style.display = "block";
+}
+
+function handleNoClick() {
+    const noButton = document.querySelector('.no-button');
+    const yesButton = document.querySelector('.yes-button');
+    noButton.textContent = messages[messageIndex];
+    messageIndex = (messageIndex + 1) % messages.length;
+    const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+    yesButton.style.fontSize = `${currentSize * 1.4}px`;
+}
+
+    </script>
+<div id="page2" class="container" style="display:none;">
+        <h1 class="header_text">Vedel som že povieš áno! 💋❤️</h1>
+        <div class="gif_container">
+            <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
+        </div>
+        <h1 class="header_text">...možno som nevedel ale dúfal som v to 🥰🤗</h1>
+    </div>    
+</body>
+</html>
